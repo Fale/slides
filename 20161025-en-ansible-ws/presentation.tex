@@ -27,123 +27,12 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Today's problems}
-    \begin{itemize}
-        \item<2-> Auditability
-        \item<3-> Job-hopping
-        \item<4-> Speed
-        \item<5-> Scalability
-        \item<6-> Horizontal scaling (IaaS "cloud")
-        \item<7-> Expected QoS
-    \end{itemize}
-\end{frame}
-
-\section{Automation}
-
-\begin{frame}
-    \frametitle{Advantages}
-    \begin{itemize}
-        \item<2-> Infrastructure as Code
-        \begin{itemize}
-            \item<3-> Code is the infrastructure documentation*
-            \item<4-> Simplify auditability
-        \end{itemize}
-        \item<5-> Infrastructures with no humans with \textit{root} powers
-        \item<6-> Easy and quick to scale out
-    \end{itemize}
-\end{frame}
-
-\section{Automation Options}
-\begin{frame}
-    \frametitle{Agent (pull) vs agent-less (push)}
-    \begin{block}<2->{Agent}
-    An Agent is a daemon that runs on every controlled machine and that will check with the server (master) every N minutes to ensure that the host is aligned with the latest configuration version. If this is not the case, the Agent will download the lastest configuration version and apply it.
-    \end{block}
-    \begin{itemize}
-        \item<3-> Advantages
-        \begin{itemize}
-            \item<4-> High performance during commands execution
-            \item<5-> Connection between clients and server is client managed
-        \end{itemize}
-        \item<6-> Disadvantages
-        \begin{itemize}
-            \item<7-> Forces the master to be in the least secure network segment
-            \item<8-> Resources are used even if no changes are being applied
-            \item<9-> More daemons to take care of
-            \item<10-> Chicken and Egg problem 
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
     \frametitle{Idempotence}
     \begin{definition}{Idempotence}
     is the property of certain operations in mathematics and computer science, that can be applied multiple times without changing the result beyond the initial application. 
     \end{definition}
 \end{frame}
 
-\subsection{Chef}
-\begin{frame}
-    \frametitle{Chef}
-    \begin{itemize}
-        \item<2-> Written in Ruby 
-        \item<3-> Pull mode only
-        \item<4-> Advantages
-        \begin{itemize}
-            \item<5-> Very well integrated with git
-            \item<6-> Rich collection of available modules
-            \item<7-> Easy to install
-        \end{itemize}
-        \item<8-> Disadvantages
-        \begin{itemize}
-            \item<9-> Code driven
-            \item<10-> Complex tool
-            \item<11-> Steep learning curve
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\subsection{Puppet}
-\begin{frame}
-    \frametitle{Puppet}
-    \begin{itemize}
-        \item<2-> Written in Ruby
-        \item<3-> Mainly pull mode
-        \item<4-> Advantages
-        \begin{itemize}
-            \item<5-> Very large user base
-            \item<6-> High number of modules available
-        \end{itemize}
-        \item<7-> Disadvantages
-        \begin{itemize}
-            \item<8-> Steep learning curve
-            \item<9-> Compless to setup
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\subsection{SaltStack}
-\begin{frame}
-    \frametitle{SaltStack}
-    \begin{itemize}
-        \item<2-> Written in Python
-        \item<3-> Both push and pull mode
-        \item<4-> Advantages
-        \begin{itemize}
-            \item<5-> Very consistent use of YAML for input, output, and configs
-            \item<6-> Strong community
-            \item<7-> Highly scalable and resilient
-            \item<8-> Very good introspection tools
-        \end{itemize}
-        \item<9-> Disadvantages
-        \begin{itemize}
-            \item<10-> Very complex to setup
-            \item<11-> Very steep learning curve
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\subsection{Ansible}
 \begin{frame}
     \frametitle{Ansible}
     \begin{itemize}
@@ -194,43 +83,6 @@
                             .
                             .
     \end{semiverbatim}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Infrastructure as Data}
-    \begin{itemize}
-        \item<2-> Really simple to write
-        \item<3-> Even simpler to read
-        \item<4-> Only the bit important to you need to be written
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-    \frametitle{Example of syntax}
-    \begin{semiverbatim}
-\textcolor{green}{---}
-\textcolor{green}{- hosts:} \textcolor{blue}{all}
-\textcolor{green}{  become:} \textcolor{blue}{True}
-\textcolor{green}{  tasks:}
-\textcolor{green}{  - name:} \textcolor{blue}{Ensure mysql is installed}
-\textcolor{green}{    yum:}
-\textcolor{green}{      name:} \textcolor{blue}{mysql}
-\textcolor{green}{      state:} \textcolor{blue}{present}
-\textcolor{green}{  - name:} \textcolor{blue}{Ensure tom user is present}
-\textcolor{green}{    user:}
-\textcolor{green}{      name:} \textcolor{blue}{tom}
-\textcolor{green}{      state:} \textcolor{blue}{present}
-    \end{semiverbatim}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Usual deployment process}
-    \begin{itemize}
-        \item<2-> Automate few actions with Ansible Playbooks
-        \item<3-> Create Ansible Roles for the setup of a simple machine type
-        \item<4-> Rollout of the first machines completely managed with Ansible
-        \item<5-> Migration of all machines to Ansible
-    \end{itemize}
 \end{frame}
 
 \begin{frame}
