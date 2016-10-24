@@ -1,0 +1,209 @@
+\documentclass[t,aspectratio=169]{beamer}
+%\usepackage{fale}
+
+%%% presentation below
+
+\title{RPM Packaging}
+\subtitle{How software delivery works and why RPM packaging is more current than ever}
+\author{Fabio Alessandro Locati}
+\date{26 October 2016}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+    \frametitle{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Intro}
+\begin{frame}
+    \frametitle{About me}
+    \begin{itemize}
+        \item<2-> RPM user since 2001
+        \item<3-> IT Consultant since 2004
+        \item<4-> RPM creator since 2013
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Deployment in the past}
+    \begin{itemize}
+        \item<2-> Mayority of application needed to be deployed on a single system
+        \item<3-> Annual/Bi-annual
+        \item<4-> All hands on deck
+        \begin{itemize}
+            \item<5-> Devs ready to patch
+            \item<6-> Ops ready to deploy work-around
+        \end{itemize}
+        \item<7-> Usually performed during night-time
+        \item<8-> Hours of downtime
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Today expectations}
+    \begin{itemize}
+        \item<2-> Deploy multiple times every day
+        \item<3-> Cheap deployments
+        \item<4-> No down time
+        \item<5-> Need of mass deployment (tens/hundreds/thousands of systems)
+        \item<6-> Block the deployment of software that might introduce critical bugs
+        \item<7-> Horizontal (dynamic) scalability
+    \end{itemize}
+\end{frame}
+
+\section{Deployments}
+\begin{frame}
+    \frametitle{Items that could be involved in deployments}
+    \begin{itemize}
+        \item<2-> \textbf{Code}
+        \item<3-> \textbf{Source Control System (SCM):} git, hg, svn, cvs
+        \item<4-> \textbf{Build system:} Koji, Jenkins, Shell
+        \item<5-> \textbf{Software packaging system:} RPM, DEB, Docker, WAR, generic archive
+        \item<6-> \textbf{Test system:} Bodhi, Jenkins
+        \item<7-> \textbf{Environment packaging system:} Docker, PyEnv
+        \item<8-> \textbf{Orchestration tool:} Ansible, Puppet, Salt, Chef, Kubernetes
+        \item<9-> \textbf{Execution environment:} Native OS, OpenStack, OpenShift, Docker, runc
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RPM as software packaging system}
+    \begin{itemize}
+        \item<2-> Advantages
+        \begin{itemize}
+            \item<3-> Very well known format
+            \item<4-> Clear distinction between compile environment and run environment
+            \item<5-> Easy to integrate with any kind of environment
+            \item<6-> Very good at resolving dependencies
+            \item<7-> Very rigid policies
+        \end{itemize}
+        \item<8-> Disadvantages
+        \begin{itemize}
+            \item<9-> Heavily connected with RPM-based distro (Fedora, RHEL, OEL, SLES, OpenSUSE, CentOS, SL)
+            \item<10-> Very rigid policies
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RPM components}
+    \begin{itemize}
+        \item<2-> SPEC file
+        \item<3-> Sources files (at least 1)
+        \item<4-> Patches (eventually)
+    \end{itemize}
+\end{frame}
+
+\section{RPM Processes}
+\begin{frame}
+    \frametitle{RPM build process}
+    \begin{itemize}
+        \item<2-> Fetch of the SPEC file
+        \item<3-> Fetch of sources/patches
+        \item<4-> Creation of the .src.rpm file
+        \item<5-> Creation of binaries .rpm files
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fedora pipeline}
+    \begin{itemize}
+        \item<2-> SPEC file, additional sources, and patches in git repo
+        \item<3-> Upstream source in cache system
+        \item<4-> Build in Koji
+        \item<5-> Promotion to Bodhi testing branch
+        \item<6-> Automated tests by Bodhi and AutoQA
+        \item<7-> Manual testing
+        \item<8-> Promotion to Bodhi stable branch
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example RPM pipeline 1}
+    \begin{itemize}
+        \item<2-> SPEC file, additional sources, and patches in git repo
+        \item<3-> Build in Koji
+        \item<4-> Promotion to Bodhi testing branch
+        \item<5-> Automated tests by Bodhi and AutoQA
+        \item<6-> Manual testing
+        \item<7-> Promotion to Bodhi stable branch
+        \item<8-> Simple upgrade of live system (yum update -y PACKAGE)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Example RPM pipeline 2}
+    \begin{itemize}
+        \item<2-> SPEC file, additional sources, and patches in git repo
+        \item<3-> Build in Koji
+        \item<4-> Creation of a Docker image
+        \item<5-> Automated tests
+        \item<6-> Manual testing
+        \item<7-> Propagate the new Docker image
+    \end{itemize}
+\end{frame}
+
+\section{RPM and Docker}
+\begin{frame}
+    \frametitle{RPM and Docker}
+    \begin{itemize}
+        \item<2-> RPM work very well in Docker environments
+        \item<3-> Installing RPMs allow a cleaner Docker file and image
+        \item<4-> RPMs can be deployed within or without Docker
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Docker example}
+    \begin{semiverbatim}
+RUN dnf install -y tar make gcc ruby ruby-devel rubygems graphviz \\
+  rubygem-nokogiri unzip findutils which wget python-devel \\ 
+  zlib-devel libjpeg-devel redhat-rpm-config patch \\
+  \&\& dnf clean packages \\
+  \&\& gem install --no-ri --no-rdoc asciidoctor --version \\
+    \$ASCIIDOCTOR\_VERSION \\
+  \&\& gem install --no-ri --no-rdoc asciidoctor-pdf --version \\
+    1.5.0.alpha.11 \\
+  \&\& gem install --no-ri --no-rdoc slim \\
+  \&\& (curl -LkSs https://api.github.com/repos/asciidoctor \\
+    | tar xfz - -C \$BACKENDS --strip-components=1) \\
+  \&\& wget https://bitbucket.org/pypa/setuptools/raw/bootstrap \\
+     -O - | python \\
+  \&\& easy\_install actdiag
+    \end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Docker example with RPM}
+    \begin{semiverbatim}
+RUN dnf install -y rubygem-asciidoctor-pdf \\
+  \&\& dnf clean packages
+    \end{semiverbatim}
+\end{frame}
+
+\section{RPM and Docker}
+\begin{frame}
+    \frametitle{Size of the images}
+    \begin{itemize}
+        \item Fedora base image: 204MB
+        \item<2-> First image: 776MB
+        \item<3-> Second image: 238MB
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Additional resources}
+    \begin{itemize}
+        \item Laboratorio ICT, 14:00 - Come pacchettizzare applicazioni in formato RPM
+        \item Official website: http://rpm.org
+        \item Fedora guide: https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+        \item RPM Guide: http://rpm-guide.readthedocs.io
+    \end{itemize}
+\end{frame}
+
+%\makethanks
+
+\end{document}
