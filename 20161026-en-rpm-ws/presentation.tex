@@ -1,0 +1,114 @@
+\documentclass[t,aspectratio=169]{beamer}
+%\usepackage{fale}
+
+%%% presentation below
+
+\title{RPM Packaging}
+\subtitle{How software delivery works and why RPM packaging is more current than ever}
+\author{Fabio Alessandro Locati}
+\date{26 October 2016}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+    \frametitle{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Intro}
+\begin{frame}
+    \frametitle{About me}
+    \begin{itemize}
+        \item<2-> RPM user since 2001
+        \item<3-> IT Consultant since 2004
+        \item<4-> RPM creator since 2013
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RPM components}
+    \begin{itemize}
+        \item<2-> SPEC file
+        \item<3-> Sources files (at least 1)
+        \item<4-> Patches (eventually)
+    \end{itemize}
+\end{frame}
+
+\section{RPM Processes}
+\begin{frame}
+    \frametitle{RPM build process}
+    \begin{itemize}
+        \item<2-> Fetch of the SPEC file
+        \item<3-> Fetch of sources/patches
+        \item<4-> Creation of the .src.rpm file
+        \item<5-> Creation of binaries .rpm files
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The SPEC file structure}
+    \begin{itemize}
+        \item<2-> Preamble
+        \item<3-> Body
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The SPEC file structure - the preamble}
+    \begin{itemize}
+        \item<2-> \textbf{Name}
+        \item<3-> \textbf{Version}
+        \item<4-> \textbf{Release}
+        \item<5-> Summary
+        \item<6-> License
+        \item<7-> URL
+        \item<8-> \textbf{SourceX}
+        \item<9-> PatchX
+        \item<10-> BuildArch
+        \item<11-> BuildRequires
+        \item<12-> Requires
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Body sections}
+    \begin{itemize}
+        \item<2-> \textbf{\%description:} Long description
+        \item<3-> \textbf{\%prep:} Commands to prepare the environment for the build
+        \item<4-> \textbf{\%build:} Commands to build the software
+        \item<5-> \textbf{\%install:} Commands to install the software
+        \item<6-> \textbf{\%check:} Commands to test the software
+        \item<7-> \textbf{\%files:} List of files and folders to be included in the package
+        \item<8-> \textbf{\%changelog:} Change history
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Demo}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Helpers}
+    \begin{itemize}
+        \item GO: gofed
+        \item Perl: cpan2rpm
+        \item Python: pyp2rpm
+        \item Ruby: gem2rpm
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Additional resources}
+    \begin{itemize}
+        \item Demo code: https://github.com/Fale/demo-specs
+        \item Official website: http://rpm.org
+        \item Fedora guide: https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+        \item RPM Guide: http://rpm-guide.readthedocs.io
+    \end{itemize}
+\end{frame}
+
+%\makethanks
+
+\end{document}
