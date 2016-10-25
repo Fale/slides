@@ -69,19 +69,24 @@
 \begin{frame}[fragile]
     \frametitle{Ansible infrastructure}
     \begin{semiverbatim}
-+---------------------+
-|     GIT Server      |
-+---------------------+     .
-           |                .
-           |                .   +---------------------+
-           V                |-->|   Controlled Host   |
+                                +---------------------+
+                            |-->|    ws01.fale.io     |
+                            |   +---------------------+
+                            |
 +---------------------+     |   +---------------------+
-| Ansible Controller  |-----|
+| Ansible Controller  |-----|-->|    ws02.fale.io     |
 +---------------------+     |   +---------------------+
-                            |-->|   Controlled Host   |
-                            .   +---------------------+
-                            .
-                            .
+                            |
+                            |   +---------------------+
+                            |-->|    db01.fale.io     |
+                                +---------------------+
+    \end{semiverbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Basic Commands}
+    \begin{semiverbatim}
+ansible all -u root -m setup
     \end{semiverbatim}
 \end{frame}
 
@@ -95,6 +100,7 @@
 \begin{frame}
     \frametitle{Links}
     \begin{itemize}
+        \item Demo source: https://github.com/Fale/ansible\_lamp
         \item Official documentation: http://docs.ansible.com
         \item Videos: https://www.ansible.com/videos
         \item Ebooks: https://www.ansible.com/ebooks
