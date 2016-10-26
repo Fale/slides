@@ -23,7 +23,7 @@
     \begin{itemize}
         \item<2-> RPM user since 2001
         \item<3-> IT Consultant since 2004
-        \item<4-> RPM creator since 2013
+        \item<4-> RPMs creator since 2013
     \end{itemize}
 \end{frame}
 
@@ -39,6 +39,7 @@
         \end{itemize}
         \item<7-> Usually performed during night-time
         \item<8-> Hours of downtime
+        \item<9-> Very expensive deployments
     \end{itemize}
 \end{frame}
 
@@ -49,8 +50,7 @@
         \item<3-> Cheap deployments
         \item<4-> No down time
         \item<5-> Need of mass deployment (tens/hundreds/thousands of systems)
-        \item<6-> Block the deployment of software that might introduce critical bugs
-        \item<7-> Horizontal (dynamic) scalability
+        \item<6-> Horizontal (dynamic) scalability
     \end{itemize}
 \end{frame}
 
@@ -75,16 +75,17 @@
         \item<2-> Advantages
         \begin{itemize}
             \item<3-> Very well known format
-            \item<4-> Clear distinction between compile environment and run environment
-            \item<5-> Easy to integrate with any kind of environment
-            \item<6-> Very good at resolving dependencies
-            \item<7-> Checksum of all files
-            \item<8-> Very rigid policies
+            \item<4-> Open Standard
+            \item<5-> Clear distinction between compile environment and run environment
+            \item<6-> Easy to integrate with any kind of environment
+            \item<7-> Very good at resolving dependencies
+            \item<8-> Checksum of all files
+            \item<9-> Very rigid policies
         \end{itemize}
-        \item<9-> Disadvantages
+        \item<10-> Disadvantages
         \begin{itemize}
-            \item<10-> Heavily connected with RPM-based distro (Fedora, RHEL, OEL, SLES, OpenSUSE, CentOS, SL)
-            \item<11-> Very rigid policies
+            \item<11-> Heavily connected with RPM-based distro (Fedora, RHEL, OEL, SLES, OpenSUSE, CentOS, SL)
+            \item<12-> Very rigid policies
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -185,7 +186,6 @@ RUN dnf install -y rubygem-asciidoctor-pdf \\
     \end{semiverbatim}
 \end{frame}
 
-\section{RPM and Docker}
 \begin{frame}
     \frametitle{Size of the images}
     \begin{itemize}
